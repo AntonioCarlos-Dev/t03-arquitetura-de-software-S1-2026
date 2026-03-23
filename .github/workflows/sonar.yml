@@ -1,0 +1,33 @@
+name: CI Pipeline - Build & SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+      - feature/MVC
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-analyze:
+    name: Build and Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout do código
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # SonarCloud precisa do histórico do git para analisar o que é código novo
+
+      - name: 2. Configurar o Java 11 (Ambiente do Servidor)
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven' # Faz cache das dependências para deixar o build mais rápido
+
+      - name: 3. Compilar o código e rodar o SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Chave automática do próprio GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # A chave de segurança
+        run: mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar

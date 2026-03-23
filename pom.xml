@@ -28,7 +28,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<sonar.organization>antoniocarlos-dev</sonar.organization>
-		<sonar.projectKey>antoniocarlos-dev_t03-arquitetura-de-software-s1-2026</sonar.projectKey>
+		<sonar.projectKey>AntonioCarlos-Dev_t03-arquitetura-de-software-S1-2026</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
